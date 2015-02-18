@@ -9,16 +9,7 @@ var HubControl = require('./lib/ardeidae').hubControl;
 var Utilities = require('./lib/ardeidae').utilities;
 var Config = require('./lib/ardeidae').config;
 
-var isInArray = function (serverData) {
-    var i;
-    var serverlist = HubControl.getArray();
-    for ( i = 0; i < serverlist.length; i ++ ) {
-      if ( serverlist[i].domain == serverData.domain && serverlist[i].name == serverData.name ) {
-        return i;
-      }
-    }
-    return null;
-};
+
 /**
  *  Start up all things Ardeidae.
  */
@@ -31,33 +22,37 @@ var HubControl = new HubControl(Config.hubCallsign, Config.hubVersion);
 var httpServer = http.createServer(function (request, response) {
   // HttpControl.setOnlineServers( HubControl.getServerCount() );
   // HttpControl.setHistoricalServes( HubControl.getArrayLength() );
-  var hubArray = HubControl.getArray();
+  // var hubArray = HubControl.getArray();
 
-  HttpControl.handleHttpRequest(request, response, hubArray, function ( serverData ) {
+  HttpControl.handleHttpRequest(request, response, HubControl, function ( serverData ) {
 
-console.log("DAAAAAAAAAAAAAAAAAAAAAAAAAA");
-      console.log (serverData);
-      var setID = isInArray (serverData);
-      if ( setID === 1) {
-        console.log("Update old server!!!!");
+      var setID = HubControl.isInArray (serverData);
+      if ( setID >= 1 ) {
         HubControl.updateServer (serverData, setID);
-      } else {
-        console.log("Set new server!!!!!");
+      } else if ( setID === 0 ) {
         HubControl.setNewServer( serverData );
+      } else {
+        console.log("Error in recieved data: " + serverData);
       }
 
-      console.log(HubControl.getArray());
+      // console.log(HubControl.getArray());
 
   });
 
 });
 
 httpServer.listen(Config.port, function() {
-  console.log( Utilities.getUtcNow ('full') +
-    ': HUB HTTP server is listening on port ' + Config.port +
-    ' (Ardeidae HUB Version v' + Config.hubVersion + ')');
+  console.log( Utilities.getUtcNow ('full') + ': Ardeidae HUB Version (v' + Config.hubVersion + ') HTTP server is listening on port ' + Config.port );
 });
 
+
+
+/**
+ *  Check for dead servers and wipe them from array
+ */
+setInterval( function() {
+  HubControl.checkDeadServers(Config.serverTTL);
+}, Config.checkServerTTL );
 
 
 
