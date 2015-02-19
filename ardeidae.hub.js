@@ -10,11 +10,14 @@ var Utilities = require('./lib/ardeidae').utilities;
 var Config = require('./lib/ardeidae').config;
 
 
+
 /**
  *  Start up all things Ardeidae.
  */
 var HttpControl = new HttpControl();
 var HubControl = new HubControl(Config.hubCallsign, Config.hubVersion);
+
+
 
 /**
  *  HTTP Server
@@ -22,27 +25,25 @@ var HubControl = new HubControl(Config.hubCallsign, Config.hubVersion);
 var httpServer = http.createServer(function (request, response) {
   // HttpControl.setOnlineServers( HubControl.getServerCount() );
   // HttpControl.setHistoricalServes( HubControl.getArrayLength() );
-  // var hubArray = HubControl.getArray();
 
   HttpControl.handleHttpRequest(request, response, HubControl, function ( serverData ) {
-
-      var setID = HubControl.isInArray (serverData);
-      if ( setID >= 1 ) {
-        HubControl.updateServer (serverData, setID);
-      } else if ( setID === 0 ) {
-        HubControl.setNewServer( serverData );
-      } else {
-        console.log("Error in recieved data: " + serverData);
+      if ( serverData !== 'client' ) {
+        var setID = HubControl.isInArray (serverData);
+        if ( setID >= 1 ) {
+          HubControl.updateServer (serverData, setID);
+        } else if ( setID === 0 ) {
+          HubControl.setNewServer( serverData );
+        } else {
+          console.log("Error in recieved data: " + serverData);
+        }
       }
-
-      // console.log(HubControl.getArray());
-
   });
 
 });
 
 httpServer.listen(Config.port, function() {
-  console.log( Utilities.getUtcNow ('full') + ': Ardeidae HUB Version (v' + Config.hubVersion + ') HTTP server is listening on port ' + Config.port );
+  console.log( '\n' + 'Ardeidae HUB Version (v' + Config.hubVersion + ') \n====================================');
+  console.log( Utilities.getUtcNow ('full') + ': Listening on ' + Config.domain + ' port ' + Config.port);
 });
 
 
@@ -54,6 +55,11 @@ setInterval( function() {
   HubControl.checkDeadServers(Config.serverTTL);
 }, Config.checkServerTTL );
 
+
+// debugging hubArray.
+/*setInterval( function() {
+  HubControl.toStringHubActiveArray();
+}, 10000);*/
 
 
 // The "exit" event is sent before Node exits.
