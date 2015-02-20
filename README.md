@@ -8,8 +8,8 @@ Any Ardeidae clients will attempt to make contact with the hub, and thus recieve
 
 ### Ardeidae Server versions
 v0.0.1
-v0.0.2 (current)
-v1.0.0
+v0.0.2
+v1.0.0 (current)
 
 
 (Note to author:

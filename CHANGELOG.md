@@ -7,8 +7,9 @@ Changlog Ardeidae Node.js powered server-hub.
 
 Version 1.0.0
 -------------
-*Release 2015-02-***
+*Release 2015-02-21*
 First release!
+- Major fixes and revamp. Hopefully not too buggy!
 
 
 
