@@ -28,9 +28,9 @@ var httpServer = http.createServer(function (request, response) {
 
   HttpControl.handleHttpRequest(request, response, HubControl, function ( serverData ) {
       if ( serverData !== 'client' ) {
-        var setID = HubControl.isInArray (serverData);
+        var setID = HubControl.isInArray ( serverData );
         if ( setID >= 1 ) {
-          HubControl.updateServer (serverData, setID);
+          HubControl.updateServer ( serverData, setID );
         } else if ( setID === 0 ) {
           HubControl.setNewServer( serverData );
         } else {

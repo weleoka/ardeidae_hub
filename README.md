@@ -93,6 +93,8 @@ Security:
 
 Code and style:
 * new Server object should implement array format for properties rather than setting individual properties, this is so that native Array methods as defined in ECMAScript 5 can be used on the nested arrays.
+* The hub recieves POST from server and then has to check if is in hubArray 2 times, not so good. First time is to see what ID to return to server, second to update timestamp of server in hubArray.
+* Filter out server object properties not interesting for clients.
 
 
 
