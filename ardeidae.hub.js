@@ -1,6 +1,7 @@
 /*globals Exception */
 
 // Require the module dependencies.
+var osFunctions = require('os');
 var http = require('http');
 
 // Load the Ardeidae module components.
@@ -43,7 +44,7 @@ var httpServer = http.createServer(function (request, response) {
 
 httpServer.listen(Config.port, function() {
   console.log( '\n' + 'Ardeidae HUB Version (v' + Config.hubVersion + ') \n====================================');
-  console.log( Utilities.getUtcNow ('full') + ': Listening on ' + Config.domain + ' port ' + Config.port);
+  console.log( Utilities.getUtcNow ('full') + ': Listening on ' + Config.domain + ' port ' + Config.port + ' domain: ' + osFunctions.hostname());
 });
 
 
