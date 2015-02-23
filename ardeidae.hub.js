@@ -44,7 +44,7 @@ var httpServer = http.createServer(function (request, response) {
 
 httpServer.listen(Config.port, function() {
   console.log( '\n' + 'Ardeidae HUB Version (v' + Config.hubVersion + ') \n====================================');
-  console.log( Utilities.getUtcNow ('full') + ': Listening on ' + Config.domain + ' port ' + Config.port + ' domain: ' + osFunctions.hostname());
+  console.log( Utilities.getUtcNow ('full') + ': Listening on ' + osFunctions.hostname() + ' port ' + Config.port);
 });
 
 
