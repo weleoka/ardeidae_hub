@@ -8,6 +8,7 @@ var http = require('http');
 var HttpControl = require('./lib/ardeidae').httpControl;
 var HubControl = require('./lib/ardeidae').hubControl;
 var Utilities = require('./lib/ardeidae').utilities;
+var SysLog = require('./lib/ardeidae').sysLog;
 var Config = require('./lib/ardeidae').config;
 
 
@@ -17,6 +18,7 @@ var Config = require('./lib/ardeidae').config;
  */
 var HttpControl = new HttpControl();
 var HubControl = new HubControl(Config.hubCallsign, Config.hubVersion);
+var SysLog = new SysLog();
 
 
 
@@ -35,7 +37,7 @@ var httpServer = http.createServer(function (request, response) {
         } else if ( setID === 0 ) {
           HubControl.setNewServer( serverData );
         } else {
-          console.log("Error in recieved data: " + serverData);
+          SysLog.console("Error in recieved data: " + serverData);
         }
       }
   });
@@ -43,8 +45,8 @@ var httpServer = http.createServer(function (request, response) {
 });
 
 httpServer.listen(Config.port, function() {
-  console.log( '\n' + 'Ardeidae HUB Version (v' + Config.hubVersion + ') \n====================================');
-  console.log( Utilities.getUtcNow ('full') + ': Listening on ' + osFunctions.hostname() + ' port ' + Config.port);
+  SysLog.console( '\n' + 'Ardeidae HUB Version (v' + Config.hubVersion + ') \n====================================');
+  SysLog.console( Utilities.getUtcNow ('full') + ': Listening on ' + osFunctions.hostname() + ' port ' + Config.port);
 });
 
 
@@ -64,7 +66,7 @@ setInterval( function() {
 
 
 // The "exit" event is sent before Node exits.
-process.on("exit", function() { console.log("Goodbye"); });
+process.on("exit", function() { SysLog.console("Goodbye"); });
 // Uncaught exceptions generate events, if any handlers are registered.
 // Otherwise, the exception just makes Node print an error and exit.
 //process.on("uncaughtException", function(e) { console.log(Exception, e); });
