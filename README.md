@@ -41,13 +41,22 @@ There is a hub config file where deployment defaults can be specified.
 
 
 ### Config-file
+* sysLogMode: specifies the logging mode:
+
+	- 0: debug (development) verbose and logfile messages to console.
+	- 1: standard (development) verbose to console, logfile to file.
+	- 2: logfile only messages (production)
+	- 3: No message display or logging (silent mode)
+
+* sysLogFile: path and file to write log to.
+* sysLogFileType: takes values 'text' or 'JSON'
 * port: specify the port which the http server is listening on.
 * hubCallsign: here you are free to call your server whatever you wish.
 * serverVersion: Do not change this value; it will have unforseen concequences for the clients.
 * hubDomain: The domain where the hub is running (useful for future HUB of HUBs)
+* origins: Only allow server from specified origins or allow all.
 * serverTTL: (miliseconds) how long will a server that does not refresh be called "alive".
 * checkServerTTL: (miliseconds) how frequently does the hub scan serverlist for dead servers. ( should be less than the serverTTL )
-
 
 
 ### Current Features:
@@ -56,6 +65,7 @@ General functinality:
 * Hub config file.
 * Responds to HTTP request from Ardeidae Clients with JSON containing current server list meta data.
 	Meta data supplied by server is:
+
 	- What mode the server is running in.
 	- Number of online peers.
 	- Server uptime.
@@ -64,7 +74,8 @@ General functinality:
 
 General server specs and options:
 
-* Displays output on host machine terminal about operations.
+* Has modes for logging or displaying output on host machine terminal about operations.
+* Writes entries to logfile in text or JSON format.
 
 
 
@@ -77,8 +88,7 @@ Functionality:
 
 Specs and options:
 
-* Needs a mode switching capability in Config for verbose/debug mode vs. production.
-
+* Logfile should have possiblity to be written to database.
 
 Security:
 
@@ -89,7 +99,7 @@ Security:
 
 Code, style and performance:
 
-* The hub recieves data from server and then has to check if is in hubArray two times. First time is to see what ID to return to server, second is to update timestamp of server if it is already in hubArray.
+* The hub recieves data from server and then has to check if is in hubArray two times. First time is to see what ID to return to server, second is to update timestamp of server if it is already in the hubArray.
 
 
 
