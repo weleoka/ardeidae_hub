@@ -3,6 +3,7 @@
 // Require the module dependencies.
 var osFunctions = require('os');
 var http = require('http');
+var fs = require('fs');
 
 // Load the Ardeidae module components.
 var HttpControl = require('./lib/ardeidae').httpControl;
@@ -16,9 +17,10 @@ var Config = require('./lib/ardeidae').config;
 /**
  *  Start up all things Ardeidae.
  */
-var HttpControl = new HttpControl();
-var HubControl = new HubControl(Config.hubCallsign, Config.hubVersion);
-var SysLog = new SysLog();
+var SysLog = new SysLog(Config, Utilities, fs);
+var HttpControl = new HttpControl(SysLog);
+var HubControl = new HubControl(SysLog);
+
 
 
 
@@ -37,7 +39,7 @@ var httpServer = http.createServer(function (request, response) {
         } else if ( setID === 0 ) {
           HubControl.setNewServer( serverData );
         } else {
-          SysLog.console("Error in recieved data: " + serverData);
+          SysLog.file("Error in recieved data: " + serverData);
         }
       }
   });
@@ -45,8 +47,10 @@ var httpServer = http.createServer(function (request, response) {
 });
 
 httpServer.listen(Config.port, function() {
+
   SysLog.console( '\n' + 'Ardeidae HUB Version (v' + Config.hubVersion + ') \n====================================');
-  SysLog.console( Utilities.getUtcNow ('full') + ': Listening on ' + osFunctions.hostname() + ' port ' + Config.port);
+  SysLog.console( 'Listening on ' + osFunctions.hostname() + ', port ' + Config.port);
+  SysLog.file( 'Ardeidae HUB (v' + Config.hubVersion + ') started on ' + osFunctions.hostname() + ', port ' + Config.port);
 });
 
 

@@ -8,9 +8,9 @@ This is a server which logs all the Ardeidae Messaging servers currently online 
 
 
 ### Ardeidae Hub versions
-v1.0.0 (current)
+v1.0.1 (current)
 
-(Note to author: version specified in package.json, readme.md, changelog.md, lib/ardedae_hub.js and git.)
+(Note to author: version specified in package.json, readme.md, changelog.md, lib/config.js and git.)
 
 
 

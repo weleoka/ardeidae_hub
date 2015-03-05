@@ -4,6 +4,11 @@ Changelog
 Changlog Ardeidae Node.js powered server-hub.
 
 
+Version 1.0.1
+-------------
+*Release 2015-03-05*
+- Ardeidae logger module. Generates a logfile and prints to terminal window.
+
 
 Version 1.0.0
 -------------
