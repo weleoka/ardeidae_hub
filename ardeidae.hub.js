@@ -35,22 +35,24 @@ var httpServer = http.createServer(function (request, response) {
       // writeMode = writeMode || '';
       if ( typeof serverData === 'string' ) {
         if ( serverData === 'client' ) {
-          SysLog.console('Request for serverlist with method GET.');
-          return;
+          SysLog.file('Sent hub stats data to client.' );
+          return SysLog.console('Request for serverlist with method GET.');
         }
-        SysLog.file("Error in recieved data: " + serverData, 'ERROR');
-        return;
+
+        return SysLog.file("Error in recieved data: " + serverData, 'ERROR');
       }
 
       if ( writeMode === 'update' ) {
-        HubControl.updateServer ( serverData, serverData.id );
-
-      } else if (writeMode === 'new' ) {
-        HubControl.setNewServer( serverData );
-
-      } else {
-        SysLog.file('Failed to write or update HUB with: ' + serverData, 'ERROR');
+        SysLog.file('Updating server with id: ' + serverData.id + ', origin: ' + serverData.domain);
+        return HubControl.updateServer ( serverData, serverData.id );
       }
+
+      if (writeMode === 'new' ) {
+        SysLog.file('Creating new server with id: ' + serverData.id + ', origin: ' + serverData.domain);
+        return HubControl.setNewServer( serverData );
+      }
+
+      return SysLog.file('Failed to write or update HUB with: ' + serverData, 'ERROR');
   });
 
 });

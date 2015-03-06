@@ -82,6 +82,7 @@ General server specs and options:
 ### Known Issues/Missing Features:
 Functionality:
 
+* If HTTP request without relevant GET parameters serve static HTML file.
 * Client shoud be able to request serverList ordered by userCount, Location, Status or other.
 * Hub should also supply the "quote-of-the-day/joke/special-info/blog/ads" to all clients using it.
 
