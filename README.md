@@ -8,7 +8,7 @@ This is a server which logs all the Ardeidae Messaging servers currently online 
 
 
 ### Ardeidae Hub versions
-v1.0.1 (current)
+v1.0.2 (current)
 
 (Note to author: version specified in package.json, readme.md, changelog.md, lib/config.js and git.)
 
@@ -99,7 +99,7 @@ Security:
 
 Code, style and performance:
 
-* The hub recieves data from server and then has to check if is in hubArray two times. First time is to see what ID to return to server, second is to update timestamp of server if it is already in the hubArray.
+* HTTP GET request returns onlineServerList using JSON.stringify. Many GET requests means alot of stringifying server objects. It would be better to buffer the servelist in string form at a set interval and send buffer to clients.
 
 
 
@@ -107,6 +107,8 @@ Code, style and performance:
 If you'd like to contribute to Ardeidae's development, start by forking the GitHub repo:
 
 https://github.com/weleoka/ardeidae_hub.git
+
+Have a look at the known issues and missing features and take a pick or find something else that needs doing.
 
 The best way to get your changes merged is as follows:
 

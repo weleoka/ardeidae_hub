@@ -4,6 +4,13 @@ Changelog
 Changlog Ardeidae Node.js powered server-hub.
 
 
+Version 1.0.2
+-------------
+*Release 2015-03-06*
+- Added protection against faulty HTTP requests.
+- Added argument for HTTP request callback function to specify serverData writeMode as "new" or "update".
+
+
 Version 1.0.1
 -------------
 *Release 2015-03-05*

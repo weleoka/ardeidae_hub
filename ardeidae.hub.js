@@ -31,23 +31,31 @@ var httpServer = http.createServer(function (request, response) {
   // HttpControl.setOnlineServers( HubControl.getServerCount() );
   // HttpControl.setHistoricalServes( HubControl.getArrayLength() );
 
-  HttpControl.handleHttpRequest(request, response, HubControl, function ( serverData ) {
-      if ( serverData !== 'client' ) {
-        var setID = HubControl.isInArray ( serverData );
-        if ( setID >= 1 ) {
-          HubControl.updateServer ( serverData, setID );
-        } else if ( setID === 0 ) {
-          HubControl.setNewServer( serverData );
-        } else {
-          SysLog.file("Error in recieved data: " + serverData);
+  HttpControl.handleHttpRequest(request, response, HubControl, function ( serverData, writeMode ) {
+      // writeMode = writeMode || '';
+      if ( typeof serverData === 'string' ) {
+        if ( serverData === 'client' ) {
+          SysLog.console('Request for serverlist with method GET.');
+          return;
         }
+        SysLog.file("Error in recieved data: " + serverData, 'ERROR');
+        return;
+      }
+
+      if ( writeMode === 'update' ) {
+        HubControl.updateServer ( serverData, serverData.id );
+
+      } else if (writeMode === 'new' ) {
+        HubControl.setNewServer( serverData );
+
+      } else {
+        SysLog.file('Failed to write or update HUB with: ' + serverData, 'ERROR');
       }
   });
 
 });
 
 httpServer.listen(Config.port, function() {
-
   SysLog.console( '\n' + 'Ardeidae HUB Version (v' + Config.hubVersion + ') \n====================================');
   SysLog.console( 'Listening on ' + osFunctions.hostname() + ', port ' + Config.port);
   SysLog.file( 'Ardeidae HUB (v' + Config.hubVersion + ') started on ' + osFunctions.hostname() + ', port ' + Config.port);
