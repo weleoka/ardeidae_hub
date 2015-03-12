@@ -8,7 +8,7 @@ This is a server which logs all the Ardeidae Messaging servers currently online 
 
 
 ### Ardeidae Hub versions
-v1.0.2 (current)
+v1.0.3 (current)
 
 (Note to author: version specified in package.json, readme.md, changelog.md, lib/config.js and git.)
 
@@ -100,7 +100,7 @@ Security:
 
 Code, style and performance:
 
-* HTTP GET request returns onlineServerList using JSON.stringify. Many GET requests means alot of stringifying server objects. It would be better to buffer the servelist in string form at a set interval and send buffer to clients.
+* (amended v1.0.3) HTTP GET request returns onlineServerList using JSON.stringify. Many GET requests means alot of stringifying server objects. It would be better to buffer the servelist in string form at a set interval and send buffer to clients.
 
 
 

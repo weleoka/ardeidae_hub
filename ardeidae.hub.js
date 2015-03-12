@@ -43,7 +43,7 @@ var httpServer = http.createServer(function (request, response) {
       }
 
       if ( writeMode === 'update' ) {
-        SysLog.file('Updating server with id: ' + serverData.id + ', origin: ' + serverData.domain);
+        // SysLog.file('Updating server with id: ' + serverData.id + ', origin: ' + serverData.domain);
         return HubControl.updateServer ( serverData, serverData.id );
       }
 
@@ -71,6 +71,14 @@ httpServer.listen(Config.port, function() {
 setInterval( function() {
   HubControl.checkDeadServers(Config.serverTTL);
 }, Config.checkServerTTL );
+
+
+/**
+ *  Update the cached list of servers with current stats.
+ */
+setInterval( function() {
+  HubControl.setCachedArrayAsJSON( HubControl.getActiveArray() );
+}, Config.CachedArrayUpdateInterval );
 
 
 // debugging hubArray.

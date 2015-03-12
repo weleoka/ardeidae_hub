@@ -4,6 +4,11 @@ Changelog
 Changlog Ardeidae Node.js powered server-hub.
 
 
+Version 1.0.3
+-------------
+*Release 2015-03-12*
+- Caching the server list at setInterval, respond with this to client requests.
+
 Version 1.0.2
 -------------
 *Release 2015-03-06*
