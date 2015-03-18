@@ -57,6 +57,8 @@ There is a hub config file where deployment defaults can be specified.
 * origins: Only allow server from specified origins or allow all.
 * serverTTL: (miliseconds) how long will a server that does not refresh be called "alive".
 * checkServerTTL: (miliseconds) how frequently does the hub scan serverlist for dead servers. ( should be less than the serverTTL )
+* cachedArrayUpdateInterval: (miliseconds) how frequently is the JSON object that is sent in response to client requests updated from the dynamic list maintenined by the hub.
+
 
 
 ### Current Features:

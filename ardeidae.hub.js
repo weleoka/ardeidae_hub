@@ -58,7 +58,7 @@ var httpServer = http.createServer(function (request, response) {
 });
 
 httpServer.listen(Config.port, function() {
-  SysLog.console( '\n' + 'Ardeidae HUB Version (v' + Config.hubVersion + ') \n====================================');
+  SysLog.console( '\n' + 'Ardeidae HUB (v' + Config.hubVersion + ') \n====================================');
   SysLog.console( 'Listening on ' + osFunctions.hostname() + ', port ' + Config.port);
   SysLog.file( 'Ardeidae HUB (v' + Config.hubVersion + ') started on ' + osFunctions.hostname() + ', port ' + Config.port);
 });
@@ -78,7 +78,7 @@ setInterval( function() {
  */
 setInterval( function() {
   HubControl.setCachedArrayAsJSON( HubControl.getActiveArray() );
-}, Config.CachedArrayUpdateInterval );
+}, Config.cachedArrayUpdateInterval );
 
 
 // debugging hubArray.
